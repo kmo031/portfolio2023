@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+
+<a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+<a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/naver" class="btn btn-secondary acitve" role="button">Naver Login</a>
+<a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/kakao" class="btn btn-secondary acitve" role="button">Kakao Login</a>
+ <a sec:authorize="isAuthenticated()"href="/boards/list" class="btn btn-secondary acitve" role="button">글쓰기</a>
+ <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+     <button class="btn btn-info" type="submit">로그아웃</button>
+ </form>
+     <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+
+</body>
+</html>

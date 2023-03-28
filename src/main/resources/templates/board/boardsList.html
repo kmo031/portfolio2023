@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="./css/sticky-footer-navbar.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+<title>Insert title here</title>
+</head>
+<body>
+	<div align="right">
+	<h4 >안녕하세요 [[ ${userName} ]] 님  </h4>
+	 <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+     <button class="btn btn-info" type="submit">로그아웃</button>
+ 	</form>
+	
+	</div>
+	
+	<table border="1" class="table table-bordered table table-hover" >
+		<th>게시글번호</th>
+		<th>제목</th>
+		<th>작성일자</th>
+		<th>작성자</th>
+		<tr th:each="item : ${board}">
+			<td th:text="${item.uniqueId}" >No</td>
+ 			<td><a th:href="@{/boards/view(uniqueId=${item.uniqueId})}">[[${item.title}]]</a></td>
+			<td th:text="${item.createdDate}">createDate</td>
+			<td th:text="${item.writer}">userId</td> 
+		</tr>
+	</table>
+	
+
+
+	<nav style="text-align: center;">
+	    <ul class="pagination"
+	        th:with="start=${T(java.lang.Math).floor(board.number/10)*10 + 1},last=(${start + 9 < board.totalPages ? start + 9 : board.totalPages})">
+	        <li>
+	            <a th:href="@{/boards/list(page=1)}" aria-label="First">
+	                <span aria-hidden="true">처음</span>
+	            </a>
+	        </li>
+	
+	        <li th:class="${board.first} ? 'disabled'">
+	            <a th:href="${board.first} ? '#' :@{/boards(page=${board.number})}" aria-label="Previous">
+	                <span aria-hidden="true">&lt;</span>
+	            </a>
+	        </li>
+	
+	        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == board.number + 1} ? 'active'">
+	            <a th:text="${page}" th:href="@{/boards/list(page=${page})}"></a>
+	        </li>
+	
+	        <li th:class="${board.last} ? 'disabled'">
+	            <a th:href="${board.last} ? '#' : @{/boards/list(page=${board.number + 2})}" aria-label="Next">
+	                <span aria-hidden="true">&gt;</span>
+	            </a>
+	        </li>
+	
+	        <li>
+	            <a th:href="@{/boards/list(page=${board.totalPages})}" aria-label="Last">
+	                <span aria-hidden="true">마지막</span>
+	            </a>
+	        </li>
+	    </ul>
+	</nav>
+
+	<button onClick="location.href='./write-bbs'">글쓰기</button>
+	<!-- <button>수정</button>
+	<button>삭제</button> -->
+</body>
+</html>
