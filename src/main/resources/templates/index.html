@@ -1,21 +1,159 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>sangmin page</title>
 </head>
+
+<style>
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Zilla Slab', sans-serif;
+}
+
+h2 {
+	font-weight: bold;
+}
+
+p.skill {
+	font-weight: bold;
+	font-family: 'Roboto Slab', sans-serif;
+}
+
+p.subtitle {
+	font-family: 'Roboto Slab', sans-serif;
+	font-size: 18px;
+}
+
+i {
+	font-weight: bold;
+	font-style: italic;
+	float: right;
+	font-family: 'Roboto Slab', sans-serif;
+}
+
+hr {
+	width: 40px;
+	background-color: #3178fb;
+	height: 2px;
+}
+
+.progress {
+	height: 10px;
+}
+</style>
+
+<th:block th:replace="fragments/header :: headerFragment()"></th:block>
 <body>
 
+	<div class="container">
+		<div class="jumbotron">
+			<h1 class="text-center">Sangmin's PortFolio</h1>
+			<p class="text-center">스펀지같이 흡수하는 개발자 개발자</p>
+		</div>
+	</div>
+
+	<div class="container" id="wrapper">
+		<div class="row">
+			<!-- 게시판  -->
+			<div class="card col-md-6" style="padding: 3px;">
+				<div class="card-header">
+					<h5 class="card-title">개발이력</h5>
+				</div>
+				<div class="card-body">
+					<ul>
+						<li><span>대합하이퍼텍</span>
+							<ul>
+								<li>근무기간 : 2013.08~2013.09(12개월)</li>
+								<li>담당업무 : EMV 신용카드 결제 임베디드 프로그램 개발</li>
+								<li>사용기술 : C,WebSocket</li>
+							</ul></li>
+						<li><span>MakeKnow</span>
+							<ul>
+								<li>근무기간 : 2020.04~2022.10(28개월)</li>
+								<li>담당업무 : MES Web 개발, 모바일 APP개발</li>
+								<li>사용기술 : Java, mariaDB, Spring, MyBatis, ExtJS, Flutter
+									lua, Nginx, Influx, Grafana, Redis</li>
+							</ul></li>
+					</ul>
 
 
-<a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
-<a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/naver" class="btn btn-secondary acitve" role="button">Naver Login</a>
-<a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/kakao" class="btn btn-secondary acitve" role="button">Kakao Login</a>
- <a sec:authorize="isAuthenticated()"href="/boards/list" class="btn btn-secondary acitve" role="button">글쓰기</a>
- <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
-     <button class="btn btn-info" type="submit">로그아웃</button>
- </form>
-     <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+				</div>
+			</div>
+			<!-- 게시판 End  -->
+
+			<!-- 공지사항  -->
+
+			<div class="card col-md-6" style="padding: 3px;">
+				<div class="card-header">
+					<h5 class="card-title">스킬</h5>
+				</div>
+
+
+				<div class="col">
+					<p class="skill">
+						Java <i class="val">70%</i>
+					</p>
+					<div class="progress">
+						<div
+							class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+							role="progressbar" style="width: 70%" aria-valuenow="70"
+							aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+				<div class="col">
+					<p class="skill">
+						Spring <i class="val">60%</i>
+					</p>
+					<div class="progress">
+						<div
+							class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+							role="progressbar" style="width: 60%" aria-valuenow="60"
+							aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+				<div class="col">
+					<p class="skill">
+						MariaDB <i class="val">70%</i>
+					</p>
+					<div class="progress">
+						<div
+							class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+							role="progressbar" style="width: 70%" aria-valuenow="70"
+							aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+				
+				<div class="col">
+					<p class="skill">
+						Linux <i class="val">50%</i>
+					</p>
+					<div class="progress">
+						<div
+							class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+							role="progressbar" style="width: 50%" aria-valuenow="50"
+							aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+				<div class="col">
+					<p class="skill">
+						NetWork <i class="val">60%</i>
+					</p>
+					<div class="progress">
+						<div
+							class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+							role="progressbar" style="width: 60%" aria-valuenow="60"
+							aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- 공지사항 End  -->
+	</div>
+
+
 
 </body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>

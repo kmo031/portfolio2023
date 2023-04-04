@@ -1,4 +1,4 @@
-package com.sangmin.portfolio.controller;
+package com.sangmin.portfolio.board.controller;
 
 import java.util.Optional;
 

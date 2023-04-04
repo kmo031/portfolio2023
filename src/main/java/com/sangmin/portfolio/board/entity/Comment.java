@@ -39,7 +39,8 @@ public class Comment extends BaseTimeEntity{
             generator="COMMENT_SEQ_GEN" //식별자 생성기를 설정해놓은  USER_SEQ_GEN으로 설정        
             )
 	private Long uniqueId;
-	private String coment;
+	private String comment;
 	private String writer;
+	private Long idx;
 	
 }

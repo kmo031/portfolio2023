@@ -10,39 +10,41 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.sangmin.portfolio.board.dto.BoardDto;
+import com.sangmin.portfolio.board.dto.CommentDto;
 import com.sangmin.portfolio.board.entity.Board;
+import com.sangmin.portfolio.board.entity.Comment;
 import com.sangmin.portfolio.board.repository.BoardRepository;
+import com.sangmin.portfolio.board.repository.CommentRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class BoardService {
+public class CommentService {
 	
-	private final BoardRepository boardRepository;
+	private final CommentRepository commentRepository;
 	
 	@Transactional
-	public Long save(BoardDto requestDto) {
-	    return boardRepository.save(requestDto.toEntity()).getUniqueId();
+	public Long save(CommentDto requestDto) {
+	    return commentRepository.save(requestDto.toEntity()).getUniqueId();
 	}
 	
-	public List<Board> getList() {
-		return boardRepository.findAll();
+	public List<Comment> getList() {
+		return commentRepository.findAll();
 	}
 	
-	public Page<Board> findByBoardList(Pageable pageable) {
+	public Page<Comment> findByBoardList(Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10); // <- Sort 추가
-		return boardRepository.findAll(pageable);
+		return commentRepository.findAll(pageable);
 	}
 	
-	public Optional<Board> getId(Long uniqueId) {
-		return boardRepository.findById(uniqueId);
+	public Optional<Comment> getId(Long uniqueId) {
+		return commentRepository.findById(uniqueId);
 	}
 	
 	public void deletById(Long uniqueId) {
-		 boardRepository.deleteById(uniqueId);
+		commentRepository.deleteById(uniqueId);
 	}
 
 

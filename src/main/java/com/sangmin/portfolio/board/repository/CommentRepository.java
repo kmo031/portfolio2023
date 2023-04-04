@@ -1,13 +1,14 @@
-package com.sangmin.portfolio.repository;
+package com.sangmin.portfolio.board.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sangmin.portfolio.board.entity.Board;
+import com.sangmin.portfolio.board.entity.Comment;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-	Page<Board> findAll(Pageable pageable);
+	Page<Comment> findAll(Pageable pageable);
 
 }

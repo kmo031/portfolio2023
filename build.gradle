@@ -49,6 +49,8 @@ dependencies {
 	
 	implementation'org.slf4j:jcl-over-slf4j'
 	implementation'ch.qos.logback:logback-classic'
+	
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 }
 
 tasks.named('test') {
