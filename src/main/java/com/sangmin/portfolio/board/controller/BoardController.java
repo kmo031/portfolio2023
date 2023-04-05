@@ -1,5 +1,6 @@
 package com.sangmin.portfolio.board.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sangmin.portfolio.board.dto.BoardDto;
 import com.sangmin.portfolio.board.entity.Board;
+import com.sangmin.portfolio.board.entity.Comment;
 import com.sangmin.portfolio.board.service.BoardService;
+import com.sangmin.portfolio.board.service.CommentService;
 import com.sangmin.portfolio.model.SessionUser;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	private final HttpSession httpSession;
 	
@@ -57,12 +63,19 @@ public class BoardController {
     }
     
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String getBoardId(HttpServletRequest request,Model model, BoardDto requestDto) throws Exception {
+    public String getBoardId(HttpServletRequest request,Model model, BoardDto requestDto, Pageable pageable) throws Exception {
     Long uniqueId = requestDto.getUniqueId();
     Optional<Board> board = boardService.getId(uniqueId);
+    
+    SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
+    if(user != null){
+        model.addAttribute("userName", user.getName());
+    }
     if(board.isPresent()) {
     	model.addAttribute("board", board.get());
     }
+
     return "board/boardView";
     }
     

@@ -18,6 +18,13 @@ public class CommentDto {
 	public CommentDto(String comment) {
 	    this.comment = comment;
 	}
+	
+	public CommentDto(Comment comment) {
+	    this.comment = comment.getComment();
+	    this.uniqueId =comment.getUniqueId();
+	    this.writer = comment.getWriter();
+	    this.idx = comment.getIdx();
+	}
 		
 	public Comment toEntity() {
 	    return Comment.builder()

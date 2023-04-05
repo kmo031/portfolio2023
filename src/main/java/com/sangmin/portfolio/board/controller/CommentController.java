@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,102 +40,68 @@ public class CommentController {
 //    Comment comment = commentService.getComment(request);	
 //    return comment;
 //    }
-//    @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getCommentsList(HttpServletRequest request,Model model, Pageable pageable) throws Exception {
+    public String getCommentsList(HttpServletRequest request,Model model, Pageable pageable,CommentDto requestDto) throws Exception {
     
-	Long uniqueId =1L;
-//	Page<Comment> comment = commentService.findByCommentList(pageable);
-	SessionUser user = (SessionUser) httpSession.getAttribute("user");
+    	 Page<Comment> comment = commentService.findComments(requestDto,pageable);
+    	    
+	    SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-//    model.addAttribute("comment", comment);
+	 
+	    
+	    if(user != null){
+	        model.addAttribute("userName", user.getName());
+	    }
+	    
+	    if(comment !=null) {
+	    	model.addAttribute("commentList", comment);
+	    }
+
+	    return "/board/boardView :: #commentTable"; // template html 파일 이름 + '::' + fragment의 id
+    }
     
+   
+    
+    @RequestMapping(value = "/write", method = RequestMethod.POST)
+    public String writeBbs(HttpServletRequest request,CommentDto requestDto, Model model, Pageable pageable) throws Exception {
+    
+    	
+    SessionUser user = (SessionUser) httpSession.getAttribute("user");
+    commentService.save(requestDto);
+    
+    Page<Comment> comment = commentService.findComments(requestDto,pageable);
+   
+
     if(user != null){
         model.addAttribute("userName", user.getName());
     }
-    
-    return "comment/commentsList";
+    if(comment !=null) {
+    	model.addAttribute("commentList", comment);
     }
     
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String getCommentId(HttpServletRequest request,Model model, CommentDto requestDto) throws Exception {
-    Long uniqueId = requestDto.getUniqueId();
-    Optional<Comment> comment = commentService.getId(uniqueId);
-    if(comment.isPresent()) {
-    	model.addAttribute("comment", comment.get());
-    }
-    return "comment/commentView";
+    return "/board/boardView :: #commentTable";
     }
     
-    
-    
-    @RequestMapping(value = "/write-bbs", method = RequestMethod.GET)
-    public String writeBbs(HttpServletRequest request,Model model, CommentDto requestDto) throws Exception {
-    
-    SessionUser user = (SessionUser) httpSession.getAttribute("user");
-    if(user != null){
-        requestDto.setWriter(user.getName());
-    }
-    model.addAttribute("requestDto", requestDto);
-    
- 
-    
-    return "comment/writeBbs";
-    }
-    
-    @RequestMapping(value = "/write", method = RequestMethod.POST)
-    @ResponseBody  
-    public String writeBbs(HttpServletRequest request,CommentDto requestDto) throws Exception {
-    
-    commentService.save(requestDto);
-    
-    return "작성완료";
-    }
-    
-    @RequestMapping(value = "/modify-bbs", method = RequestMethod.GET)
-    public String modifyBbs(HttpServletRequest request,Model model, CommentDto requestDto) throws Exception {
-	  Long uniqueId = requestDto.getUniqueId();
-	    Optional<Comment> comment = commentService.getId(uniqueId);
-	    if(comment.isPresent()) {
-	    	model.addAttribute("requestDto", comment.get());
-	    }
-	    
-	    
-//    model.addAttribute("requestDto", requestDto);
-    
-    return "comment/modifyBbs";
-    }
-    
-    @RequestMapping(value = "/modify-bbs", method = RequestMethod.POST)
-    public String modifyBbs(HttpServletRequest request, CommentDto requestDto) throws Exception {
 
-    	commentService.save(requestDto);
-    return "redirect:/comments/list";
-    }
     
-    
-    @RequestMapping(value = "/delete-bbs", method = RequestMethod.POST)
-    public String deleteByIdBbs(HttpServletRequest request,Model model, CommentDto requestDto) throws Exception {
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteByIdBbs(HttpServletRequest request,Model model, CommentDto requestDto, Pageable pageable) throws Exception {
     Long uniqueId = requestDto.getUniqueId();
+    SessionUser user = (SessionUser) httpSession.getAttribute("user");
     commentService.deletById(uniqueId);
-  
-    return "redirect:/comments/list";
+    
+    Page<Comment> comment = commentService.findComments(requestDto,pageable);
+    
+
+    if(user != null){
+        model.addAttribute("userName", user.getName());
     }
-//    @RequestMapping(value = "/comment", method = RequestMethod.PATCH)
-//    public Comment updateComment(HttpServletRequest request) throws Exception {
-//    Comment comment = commentService.getComment(request);	
-//    return comment;
-//    }
-//    
-//    @RequestMapping(value = "/comment", method = RequestMethod.DELETE)
-//    public Comment deleteComment(HttpServletRequest request) throws Exception {
-//    Comment comment = commentService.getComment(request);	
-//    return comment;
-//    }
-//    
-//    @RequestMapping(value = "/comment", method = RequestMethod.POST)
-//    public Comment insertComment(HttpServletRequest request) throws Exception {
-//    Comment comment = commentService.getComment(request);	
-//    return comment;
-//    }
+    if(comment !=null) {
+    	model.addAttribute("commentList", comment);
+    }
+    
+  
+    return "/board/boardView :: #commentTable";
+    }
+
 }
