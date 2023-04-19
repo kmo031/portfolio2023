@@ -49,6 +49,8 @@ body {
 					<li class="me-2"><a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/naver" class="btn btn-success acitve" role="button">Naver Login</a></li>
 					<li class="me-2"><a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/kakao" class="btn btn-warning acitve" role="button">Kakao Login</a></li>
 					<li class="me-2"> <a sec:authorize="isAuthenticated()"href="/boards/list" class="btn btn-secondary acitve" role="button">글쓰기</a></li>
+					<li class="me-2"> <a sec:authorize="isAuthenticated()"href="/pboards/list" class="btn btn-secondary acitve" role="button">사진글쓰기리스트</a></li>
+					<li class="me-2"> <a sec:authorize="isAuthenticated()"href="/pboards/create" class="btn btn-secondary acitve" role="button">사진글쓰기</a></li>
 					<li class="me-2"> <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
 					     <button class="btn btn-info" type="submit">로그아웃</button>
 					 </form></li>

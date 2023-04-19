@@ -57,7 +57,7 @@ public class CommentController {
 	    	model.addAttribute("commentList", comment);
 	    }
 
-	    return "/board/boardView :: #commentTable"; // template html 파일 이름 + '::' + fragment의 id
+	    return "board/boardView :: #commentTable"; // template html 파일 이름 + '::' + fragment의 id
     }
     
    
@@ -79,7 +79,7 @@ public class CommentController {
     	model.addAttribute("commentList", comment);
     }
     
-    return "/board/boardView :: #commentTable";
+    return "board/boardView :: #commentTable";
     }
     
 
@@ -101,7 +101,7 @@ public class CommentController {
     }
     
   
-    return "/board/boardView :: #commentTable";
+    return "board/boardView :: #commentTable";
     }
 
 }

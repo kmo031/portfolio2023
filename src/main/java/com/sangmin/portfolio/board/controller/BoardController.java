@@ -132,21 +132,5 @@ public class BoardController {
   
     return "redirect:/boards/list";
     }
-//    @RequestMapping(value = "/board", method = RequestMethod.PATCH)
-//    public Board updateBoard(HttpServletRequest request) throws Exception {
-//    Board board = boardService.getBoard(request);	
-//    return board;
-//    }
-//    
-//    @RequestMapping(value = "/board", method = RequestMethod.DELETE)
-//    public Board deleteBoard(HttpServletRequest request) throws Exception {
-//    Board board = boardService.getBoard(request);	
-//    return board;
-//    }
-//    
-//    @RequestMapping(value = "/board", method = RequestMethod.POST)
-//    public Board insertBoard(HttpServletRequest request) throws Exception {
-//    Board board = boardService.getBoard(request);	
-//    return board;
-//    }
+
 }

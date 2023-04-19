@@ -49,7 +49,7 @@ dependencies {
 	
 	implementation'org.slf4j:jcl-over-slf4j'
 	implementation'ch.qos.logback:logback-classic'
-	
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.1'    /* thumbnailator */
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 }
 
