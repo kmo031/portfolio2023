@@ -4,10 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 
 import com.sangmin.portfolio.model.enms.Role;
 import com.sangmin.portfolio.service.CustomOAuth2UserService;
@@ -32,15 +30,24 @@ public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
            .headers().frameOptions().disable()
            .and()
                .authorizeRequests()
-               .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
-               .antMatchers("/api/v1/**").hasRole(Role.USER.name())    
+               .antMatchers("/**").permitAll()
+               .antMatchers("/admin/**").hasRole(Role.ADMIN.name())    
                .anyRequest().authenticated()   
+           .and()
+           .formLogin()
+           .loginPage("/login")
+           .loginProcessingUrl("/loginProc")
+           .defaultSuccessUrl("/")
+           .usernameParameter("username")
+           .passwordParameter("password")
+           .permitAll()
            .and()
                .logout()
                    .logoutSuccessUrl("/").permitAll()
            
            .and()
                .oauth2Login() 
+               .loginPage("/login")
                    .userInfoEndpoint()
                        .userService(customOAuth2UserService);
 		   
@@ -51,6 +58,10 @@ public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
 	       return http.build();
 	   }
 	   
+	   @Bean
+		public BCryptPasswordEncoder encodePwd() {
+			return new BCryptPasswordEncoder();
+		}
 //	    protected void configure(HttpSecurity http) throws Exception{
 //	        http
 //	                .csrf().disable()

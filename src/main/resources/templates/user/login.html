@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="setLogin(login)">
+	<body>
+		<div class="member_login">
+			<form th:action="@{/loginProc}" th:method="POST">
+				<div class="member_login_input">
+					<input type="text" name="username" placeholder="아이디">
+				</div>
+
+				<div class="member_login_input">
+					<input type="password" name="password" placeholder="비밀번호">
+				</div>
+
+				<div class="member_login_btn">
+
+					<input type="submit" class="btn btn-secondary" id="btn-login"
+						value="로그인"> <input type="button"
+						class="btn btn-secondary" value="회원가입"
+						onclick="location.href='/users/signUp'">
+
+				</div>
+
+				<div class="find_password">
+					<a href="/forgot-password">아이디 또는 비밀번호를 잊으셨나요?</a>
+				</div>
+				<div>
+				
+						<a sec:authorize="!isAuthenticated()"
+							href="/oauth2/authorization/google" class="btn btn-danger active"
+							role="button">Google Login</a>
+						<a sec:authorize="!isAuthenticated()"
+							href="/oauth2/authorization/naver" class="btn btn-success acitve"
+							role="button">Naver Login</a>
+						<a sec:authorize="!isAuthenticated()"
+							href="/oauth2/authorization/kakao" class="btn btn-warning acitve"
+							role="button">Kakao Login</a>
+				</div>
+
+
+
+			</form>
+		</div>
+	</body>
+</th:block>

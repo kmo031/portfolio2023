@@ -29,15 +29,17 @@ public class Users extends BaseTimeEntity {
     private Role role;
     private  String picture;
     private String provider;
+    private String userName;
 
     @Builder
-    public Users(Long id, String name, String email, String password, Role role, String provider, String picture) {
+    public Users(Long id, String name, String email, String password, Role role, String provider, String picture,String userName) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.provider = provider;
+        this.userName = userName;
     }
 
     public Users update(String name, String provider) {

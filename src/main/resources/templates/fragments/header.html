@@ -4,64 +4,88 @@
 
 <th:block th:fragment="headerFragment()">
 
-  <style>
-	html,
-body {
-   margin:0;
-   padding:0;
-   height:100%;
+ <style>
+#wrap{
+	min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
+	background: pink;
 }
-.contents-wrap {
-   min-height:100%;
-   position:relative;
-   padding-bottom:100px;/* footer height */
-}
-.footer {
-   width:100%;
-   height:100px;
-   position:absolute;
-   bottom:0;
-   background:#5eaeff;
-  text-align: center;
-  color: white;
+footer{
+	height: 10rem; /* footer 높이 */
+	background: yellow;
 }
   </style>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"
+		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous"></script>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+		crossorigin="anonymous">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	crossorigin="anonymous"></script>     
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>	
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+		integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 	<nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="/">SangMin's PortFolio</a>
-	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#ftco-nav"
+				aria-controls="ftco-nav" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
 			<div class="collapse navbar-collapse " id="ftco-nav">
 				<ul class="navbar-nav ml-auto mb-lg-0 ">
-					<li class="m-2 text-white" sec:authorize="isAuthenticated()">안녕하세요 [[ ${userName} ]] 님</li>
-					<li class="me-2"><a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/google" class="btn btn-danger active" role="button">Google Login</a></li>
-					<li class="me-2"><a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/naver" class="btn btn-success acitve" role="button">Naver Login</a></li>
-					<li class="me-2"><a sec:authorize="!isAuthenticated()"href="/oauth2/authorization/kakao" class="btn btn-warning acitve" role="button">Kakao Login</a></li>
-					<li class="me-2"> <a sec:authorize="isAuthenticated()"href="/boards/list" class="btn btn-secondary acitve" role="button">글쓰기</a></li>
-					<li class="me-2"> <a sec:authorize="isAuthenticated()"href="/pboards/list" class="btn btn-secondary acitve" role="button">사진글쓰기리스트</a></li>
-					<li class="me-2"> <a sec:authorize="isAuthenticated()"href="/pboards/create" class="btn btn-secondary acitve" role="button">사진글쓰기</a></li>
-					<li class="me-2"> <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
-					     <button class="btn btn-info" type="submit">로그아웃</button>
-					 </form></li>
-		
+					<li><button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#loginModal" sec:authorize="!isAuthenticated()">로그인
+						</button>
+						<div class="modal fade" id="loginModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title" align="center">로그인</h1>
+										<button type="button" class="close"  data-bs-dismiss="modal">×</button>
+									</div>
+									<div class="modal-body">
+										<th:block
+											th:replace="~{/user/login :: setLogin(~{this::login} )}"></th:block>
+									</div>
+								</div>
+							</div>
+						</div></li>
+
+
+					<li class="me-2"><a sec:authorize="isAuthenticated()"
+						href="/boards/list" class="btn btn-secondary acitve" role="button">글쓰기</a></li>
+					<li class="me-2"><a sec:authorize="isAuthenticated()"
+						href="/pboards/list" class="btn btn-secondary acitve"
+						role="button">사진글쓰기리스트</a></li>
+					<li class="me-2"><a sec:authorize="isAuthenticated()"
+						href="/pboards/create" class="btn btn-secondary acitve"
+						role="button">사진글쓰기</a></li>
+					<li class="me-2">
+						<form th:action="@{/logout}" method="POST"
+							sec:authorize="isAuthenticated()">
+							<button class="btn btn-info" type="submit">로그아웃</button>
+						</form>
+					</li>
+
 				</ul>
-				
-				
+
+
 			</div>
 		</div>
 	</nav>
 	<!-- END nav -->
- 
-  </th:block>
+
+</th:block>
 </html>

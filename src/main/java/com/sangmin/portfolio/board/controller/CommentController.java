@@ -1,6 +1,7 @@
 package com.sangmin.portfolio.board.controller;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sangmin.portfolio.board.dto.CommentDto;
 import com.sangmin.portfolio.board.entity.Comment;
@@ -46,7 +46,6 @@ public class CommentController {
     	 Page<Comment> comment = commentService.findComments(requestDto,pageable);
     	    
 	    SessionUser user = (SessionUser) httpSession.getAttribute("user");
-
 	 
 	    
 	    if(user != null){
