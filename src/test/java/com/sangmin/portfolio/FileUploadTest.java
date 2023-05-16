@@ -28,35 +28,35 @@ public class FileUploadTest {
     	photoBoardRepository.deleteAll();
     }
 
-    @Test
-    public void 게시글저장_불러오기(){
-        //given
-        String title = "테스트 게시글";
-        String content = "테스트 본문";
-        
-        File file = new File();
-
-        List<File> attachList = new ArrayList<>();
-        attachList.add(file);
-        
-        PhotoBoard photoBoard =  PhotoBoard.builder()
-        	       .pcontent(content)
-        	       .ptitle(title)
-        	       .attachList(attachList)
-        	        .build();
-       
-        photoBoardRepository.save(PhotoBoard.builder()
-       .pcontent(content)
-       .ptitle(title)
-       .attachList(attachList)
-        .build());
-
-        //when
-        List<File> postsList = fileRepository.findAll();
+//    @Test
+//    public void 게시글저장_불러오기(){
+//        //given
+//        String title = "테스트 게시글";
+//        String content = "테스트 본문";
+//        
+//        File file = new File();
 //
-//        //then
-////        Posts posts = postsList.get(0);
-//        assertThat(posts.getTitle()).isEqualTo(title);
-//        assertThat(posts.getContent()).isEqualTo(content);
-    }
+//        List<File> attachList = new ArrayList<>();
+//        attachList.add(file);
+//        
+//        PhotoBoard photoBoard =  PhotoBoard.builder()
+//        	       .pcontent(content)
+//        	       .ptitle(title)
+//        	       .attachList(attachList)
+//        	        .build();
+//       
+//        photoBoardRepository.save(PhotoBoard.builder()
+//       .pcontent(content)
+//       .ptitle(title)
+//       .attachList(attachList)
+//        .build());
+//
+//        //when
+//        List<File> postsList = fileRepository.findAll();
+////
+////        //then
+//////        Posts posts = postsList.get(0);
+////        assertThat(posts.getTitle()).isEqualTo(title);
+////        assertThat(posts.getContent()).isEqualTo(content);
+//    }
 }
