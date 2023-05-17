@@ -4,16 +4,7 @@
 
 <th:block th:fragment="headerFragment()">
 
- <style>
-#wrap{
-	min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
-	background: pink;
-}
-footer{
-	height: 10rem; /* footer 높이 */
-	background: yellow;
-}
-  </style>
+ 
 	<script src="https://code.jquery.com/jquery-3.3.1.js"
 		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		crossorigin="anonymous"></script>
@@ -23,10 +14,7 @@ footer{
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 		crossorigin="anonymous">
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-		integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-		crossorigin="anonymous"></script>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -45,23 +33,9 @@ footer{
 
 			<div class="collapse navbar-collapse " id="ftco-nav">
 				<ul class="navbar-nav ml-auto mb-lg-0 ">
-					<li><button type="button" class="btn btn-primary"
-							data-bs-toggle="modal" data-bs-target="#loginModal" sec:authorize="!isAuthenticated()">로그인
-						</button>
-						<div class="modal fade" id="loginModal" role="dialog">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title" align="center">로그인</h1>
-										<button type="button" class="close"  data-bs-dismiss="modal">×</button>
-									</div>
-									<div class="modal-body">
-										<th:block
-											th:replace="~{/user/login :: setLogin(~{this::login} )}"></th:block>
-									</div>
-								</div>
-							</div>
-						</div></li>
+					<li><input type="button" sec:authorize="!isAuthenticated()"
+						class="btn btn-secondary" value="로그인"
+						onclick="location.href='/users/login'"></li>
 
 
 					<li class="me-2"><a sec:authorize="isAuthenticated()"
@@ -86,6 +60,9 @@ footer{
 		</div>
 	</nav>
 	<!-- END nav -->
+	
 
 </th:block>
+
+
 </html>

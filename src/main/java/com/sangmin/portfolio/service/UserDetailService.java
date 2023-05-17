@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.sangmin.portfolio.config.CustomUserDetails;
 import com.sangmin.portfolio.dto.UserDto;
 import com.sangmin.portfolio.model.Users;
 import com.sangmin.portfolio.repository.UserRepository;
@@ -36,14 +36,18 @@ public class UserDetailService implements UserDetailsService{
 		if(member == null) {
 			throw new UsernameNotFoundException(userName);
 		}
-		UserDto.ResponseUserDto userCustom = new UserDto.ResponseUserDto(member.getUserName()
-                , member.getPassword()
-                , enabled, accountNonExpired, credentialsNonExpired, accountNonLocked
-                , authorities(member.getRole().toString())
-            
-                , member.getName() // 이름
-        );
-		return userCustom;
+//		UserDto.ResponseUserDto userCustom = new UserDto.ResponseUserDto(member.getUserName()
+//                , member.getPassword()
+//                , enabled, accountNonExpired, credentialsNonExpired, accountNonLocked
+//                , authorities(member.getRole().toString())
+//            
+//                , member.getName() // 이름
+//                
+//                
+//        );
+		
+//		new UserAdapter(member);
+		return CustomUserDetails.create(member);
 
 	}
 	

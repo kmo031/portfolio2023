@@ -1,21 +1,27 @@
 package com.sangmin.portfolio.config;
 
+
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+import com.sangmin.portfolio.board.controller.PhotoBoardController;
 import com.sangmin.portfolio.model.enms.Role;
 import com.sangmin.portfolio.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
+@Slf4j
 public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
 
 
@@ -38,6 +44,7 @@ public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
            .loginPage("/login")
            .loginProcessingUrl("/loginProc")
            .defaultSuccessUrl("/")
+           .failureHandler(failureHandler())
            .usernameParameter("username")
            .passwordParameter("password")
            .permitAll()
@@ -62,21 +69,13 @@ public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
 		public BCryptPasswordEncoder encodePwd() {
 			return new BCryptPasswordEncoder();
 		}
-//	    protected void configure(HttpSecurity http) throws Exception{
-//	        http
-//	                .csrf().disable()
-//	                .headers().frameOptions().disable()
-//	                .and()
-//	                    .authorizeRequests()
-//	                    .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
-//	                    .antMatchers("/api/v1/**").hasRole(Role.USER.name())    
-//	                    .anyRequest().authenticated()   
-//	                .and()
-//	                    .logout()
-//	                        .logoutSuccessUrl("/")
-//	                .and()
-//	                    .oauth2Login() 
-//	                        .userInfoEndpoint()
-//	                            .userService(customOAuth2UserService);
-//	    }
+	   
+	   // 실패 처리를 위한 Handler
+		  @Bean
+		  public AuthenticationFailureHandler failureHandler() {
+			  return new CustomAuthFailureHandler();
+		  }
+	   
+	   
+
 }
