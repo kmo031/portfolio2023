@@ -29,12 +29,12 @@ public class UserController  {
 	
 	  @GetMapping("/login")
 	  public String loginForm() {
-	      return "/user/login";
+	      return "user/login";
 	  }
 	  
 	  @PostMapping("/login")
 	  public String loginFormPost() {
-	      return "/user/login";
+	      return "user/login";
 	  }
 
 		/*
@@ -45,7 +45,7 @@ public class UserController  {
 	    public String signUpForm( Model model) {
 		  
 	
-	        return "/user/signUp";
+	        return "user/signUp";
 	    }
 
 	    /**
@@ -75,7 +75,7 @@ public class UserController  {
 				}
 
 				/* 회원가입 페이지로 리턴 */
-				return "/user/signUp";
+				return "user/signUp";
 			}
 			
 			// 회원가입 성공 시
