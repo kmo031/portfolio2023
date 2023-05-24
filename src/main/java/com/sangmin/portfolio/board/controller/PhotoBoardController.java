@@ -5,15 +5,18 @@ package com.sangmin.portfolio.board.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +29,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sangmin.portfolio.board.dto.PhotoBoardDto;
-import com.sangmin.portfolio.board.service.CommentService;
 import com.sangmin.portfolio.board.service.PhotoBoardService;
+import com.sangmin.portfolio.dto.AttachFileDTO;
 import com.sangmin.portfolio.model.SessionUser;
+import com.sangmin.portfolio.service.FileService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +48,10 @@ public class PhotoBoardController {
 	private PhotoBoardService photoBoardService;
 	
 	@Autowired
-	private CommentService commentService;
+	private FileService fileService;
+	
+	@Value("${part4.upload.path}")
+	private String filePath;
 	
 	private final HttpSession httpSession;
 	
@@ -54,14 +61,25 @@ public class PhotoBoardController {
 
 	
 	@GetMapping("/list")
-	public String shop( Model model) {
+	public String list( Model model) {
 		log.info("shop진입");
 		
 //		int total = service.getTotal(cri);
 //		
 //		model.addAttribute("pageMaker", new PageDTO(cri, total));
-		return "/photoBoard/pBoardList";
+		return "photoBoard/pBoardList";
 	}
+	
+	@GetMapping("/detail")
+	public String detail( Model model) {
+		log.info("shop진입");
+		
+//		int total = service.getTotal(cri);
+//		
+//		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		return "photoBoard/pDetail";
+	}
+	
     @ResponseBody
     @RequestMapping(value = "/pList", method = RequestMethod.GET)
     public ResponseEntity<Page<PhotoBoardDto>> getBoardsList(HttpServletRequest request,Model model, Pageable pageable) throws Exception {
@@ -86,7 +104,7 @@ public class PhotoBoardController {
 
 		log.info("fileName: " + fileName);
 
-		File file = new File("c:\\upload\\" + fileName);
+		File file = new File(filePath+ fileName);
 
 		log.info("file: " + file);
 
@@ -137,6 +155,13 @@ public class PhotoBoardController {
 		
 	}
     
+    @SuppressWarnings("deprecation")
+	@GetMapping(value ="/getProductDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<AttachFileDTO>> getProductDetail(Long pno ){
+		
+		return new ResponseEntity<>(fileService.findByBoardId(pno),HttpStatus.OK);
+	}
     
 
 

@@ -1,5 +1,8 @@
 package com.sangmin.portfolio.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.sangmin.portfolio.board.entity.PhotoBoard;
 import com.sangmin.portfolio.model.File;
 
@@ -23,6 +26,8 @@ public class AttachFileDTO {
 	private Long pno;
 	private PhotoBoard photoBoard;
 	
+	private List<File> file;
+	
 	public File toEntity() {
 	    return File.builder()
 	    		.uuid(uuid)
@@ -41,7 +46,7 @@ public class AttachFileDTO {
 		this.fileName = file.getFileName();
 		this.fileType = file.isFileType();
 		this.mainPicture= file.isMainPicture();
-		this.photoBoard = file.getPhotoBoard();
+//		this.photoBoard = file.getPhotoBoard();
 	}
 
 	public void setPhotoBoard(PhotoBoard photoBoard) {
@@ -50,6 +55,8 @@ public class AttachFileDTO {
 			photoBoard.getAttachList().add(this.toEntity());
 		}
 	}
+	
+
 
 		
 }

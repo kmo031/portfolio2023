@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<th:block th:replace="fragments/header :: headerFragment()"></th:block>
+<body>
+
+<section class="ftco-section">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-lg-6 mb-5 ftco-animate" id="mainpicture">
+    			</div>
+    			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+    				<h3><c:out value ="${board.ptitle}"/></h3>
+    				<!-- 나중에기능추가예정  -->
+    				<!-- <div class="rating d-flex">
+							<p class="text-left mr-4">
+								<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+							</p>
+							<p class="text-left">
+								<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+							</p>
+						</div> -->
+    				
+    				<p><c:out value ="${board.pcontent}"/></p>
+						
+	          	<div class="w-100"></div>
+	         
+          	</div>
+          
+          
+          <!-- 	<p><a href="cart.html" class="btn btn-black py-3 px-5">Add to Cart</a></p> -->
+    			</div>
+    		</div>
+    	</div>
+    </section>
+	<section class="ftco-section">
+		<div class="container" id="subpicture">
+			
+		</div>
+	
+	</section>
+	
+	<script>
+		$(document).ready(function(){
+			
+			
+
+			//사진 정보 불러오기
+		   (function(){
+			   const urlParams = new URL(location.href).searchParams;
+
+			   const pno = urlParams.get('pno');
+			   
+		     		$.getJSON("/pboards/getProductDetail", {pno: pno}, function(arr){
+		     			
+		     			var str = "";
+		     			var str2 = "";
+		     		$(arr).each(function(i, Attach){
+		     			var fileCallPath = encodeURIComponent(Attach.uploadPath+ "/" + Attach.uuid +"_" +
+		     					Attach.fileName);
+		     			console.log(fileCallPath);
+		     			if(Attach.mainPicture == true){
+		     			//사진을 누르면 크게 보여주기 추가예정
+		     			//str += "<a href='/display?fileName="+fileCallPath+"' class='image-popup'>";
+		     				str += "<img src='/display?fileName="+fileCallPath+"' class='img-fluid' alt='Colorlib Template'>";
+		     			//</a>";
+		     			}else{
+		     				str2 += "<img src='/display?fileName="+fileCallPath+"' class='img-context' alt='Colorlib Template'>";
+		     			}
+		     			});
+		     			$("#mainpicture").html(str);  
+		     		 	$("#subpicture").html(str2);
+		     		// });
+		     		});//end getjson
+		     	})(); // end function
+		     	
+		    
+		});
+		
+	
+	</script>
+
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

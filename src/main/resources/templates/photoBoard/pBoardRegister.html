@@ -232,6 +232,7 @@
 						function(i, obj) {
 							//image type
 							if (obj.image) {
+								console.log(obj.uploadPath);
 								var fileCallPath = encodeURIComponent(obj.uploadPath
 										+ "/s_" + obj.uuid + "_" + obj.fileName);
 								str += "<li data-path='"+obj.uploadPath+"'";

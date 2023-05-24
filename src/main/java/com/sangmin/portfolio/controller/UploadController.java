@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +38,9 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @Slf4j
 public class UploadController {
+	
+	@Value("${part4.upload.path}")
+	private String filePath;
 
 	@GetMapping("/uploadForm")
 	public void uploadForm() {
@@ -49,7 +53,7 @@ public class UploadController {
 	@PostMapping("/uploadFormAction")
 	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 
-		String uploadFolder = "C:\\upload";
+		String uploadFolder = filePath;
 
 		for (MultipartFile multipartFile : uploadFile) {
 
@@ -108,7 +112,7 @@ public class UploadController {
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 
 		List<AttachFileDTO> list = new ArrayList<>();
-		String uploadFolder = "C:\\upload";
+		String uploadFolder = filePath;
 
 		String uploadFolderPath = getFolder();
 		// make folder --------
@@ -172,7 +176,7 @@ public class UploadController {
 
 		log.info("fileName: " + fileName);
 
-		File file = new File("c:\\upload\\" + fileName);
+		File file = new File(filePath + fileName);
 
 		log.info("file: " + file);
 
@@ -196,7 +200,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 
-		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		Resource resource = new FileSystemResource(filePath + fileName);
 
 		if (resource.exists() == false) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -239,7 +243,7 @@ public class UploadController {
 		File file;
 
 		try {
-			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File(filePath + URLDecoder.decode(fileName, "UTF-8"));
 
 			file.delete();
 

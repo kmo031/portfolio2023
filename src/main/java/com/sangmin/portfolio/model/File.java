@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class File {
+public class File extends BaseTimeEntity{
 
 	@Id
 	@GeneratedValue
