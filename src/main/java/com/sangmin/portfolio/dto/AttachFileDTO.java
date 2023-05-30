@@ -3,8 +3,8 @@ package com.sangmin.portfolio.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.sangmin.portfolio.board.entity.PhotoBoard;
 import com.sangmin.portfolio.model.File;
+import com.sangmin.portfolio.photoBoard.entity.PhotoBoard;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

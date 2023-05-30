@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +46,7 @@ public class BoardController {
 //    return board;
 //    }
 //    @ResponseBody
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value="/list", method = RequestMethod.GET)
     public String getBoardsList(HttpServletRequest request,Model model, Pageable pageable,@AuthenticationPrincipal CustomUserDetails customUserDetails) throws Exception {
     
 	Long uniqueId =1L;
@@ -65,21 +64,36 @@ public class BoardController {
     return "board/boardsList";
     }
     
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String getBoardId(HttpServletRequest request,Model model, BoardDto requestDto, Pageable pageable) throws Exception {
+    @RequestMapping( method = RequestMethod.GET)
+    public String getBoardId(HttpServletRequest request,Model model, BoardDto requestDto, Pageable pageable,@AuthenticationPrincipal CustomUserDetails customUserDetails) throws Exception {
     Long uniqueId = requestDto.getUniqueId();
     Optional<Board> board = boardService.getId(uniqueId);
     
     SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-    if(user != null){
-        model.addAttribute("userName", user.getName());
+    if(customUserDetails != null){
+        model.addAttribute("userName",  customUserDetails.getName());
     }
     if(board.isPresent()) {
     	model.addAttribute("board", board.get());
     }
 
     return "board/boardView";
+    }
+    
+    @RequestMapping( method = RequestMethod.PUT)
+    public String modifyBbs(HttpServletRequest request, BoardDto requestDto) throws Exception {
+    	boardService.save(requestDto);
+    return "redirect:/boards/list";
+    }
+    
+    
+    @RequestMapping( method = RequestMethod.DELETE)
+    public String deleteByIdBbs(HttpServletRequest request,Model model, BoardDto requestDto) throws Exception {
+    Long uniqueId = requestDto.getUniqueId();
+    boardService.deletById(uniqueId);
+  
+    return "redirect:/boards/list";
     }
     
     
@@ -120,20 +134,6 @@ public class BoardController {
     return "board/modifyBbs";
     }
     
-    @RequestMapping(value = "/modify-bbs", method = RequestMethod.POST)
-    public String modifyBbs(HttpServletRequest request, BoardDto requestDto) throws Exception {
-
-    	boardService.save(requestDto);
-    return "redirect:/boards/list";
-    }
-    
-    
-    @RequestMapping(value = "/delete-bbs", method = RequestMethod.POST)
-    public String deleteByIdBbs(HttpServletRequest request,Model model, BoardDto requestDto) throws Exception {
-    Long uniqueId = requestDto.getUniqueId();
-    boardService.deletById(uniqueId);
   
-    return "redirect:/boards/list";
-    }
 
 }

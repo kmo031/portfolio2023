@@ -1,4 +1,4 @@
-package com.sangmin.portfolio.board.entity;
+package com.sangmin.portfolio.photoBoard.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +49,8 @@ public class PhotoBoard extends BaseTimeEntity{
 	private String ptitle;
 	private String pcontent;
 	private String writer;
+	private Double pprice;
 
-//	@OneToMany(mappedBy = "file", cascade = CascadeType.ALL)
-//	private List<AttachFileDTO> attachList;
 	
 	@OneToMany(mappedBy = "photoBoard",fetch = FetchType.LAZY)
 	@JsonManagedReference
@@ -59,25 +58,19 @@ public class PhotoBoard extends BaseTimeEntity{
 
 
 	@Builder
-	public PhotoBoard(Long id, String ptitle, String pcontent, String writer, List<File> attachList) {
+	public PhotoBoard(Long id, String ptitle, String pcontent, String writer, List<File> attachList, Double pprice) {
 	    this.pcontent = pcontent;
 	    this.ptitle = ptitle;
 	    this.id =id;
 	    this.writer = writer;
 	    this.attachList =attachList;
+	    this.pprice =pprice;
 	}
 
 	
 	
 	
-//	@ManyToMany
-//    @JoinTable(name = "file",
-//            joinColumns = @JoinColumn(name = "pno"),
-//            inverseJoinColumns = @JoinColumn(name = "uniqueid")
-//    )
-//    public  List<AttachFileDTO> getAttachList() {
-//        return attachList;
-//    }
+
 
 
 	

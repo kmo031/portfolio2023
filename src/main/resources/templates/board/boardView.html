@@ -36,8 +36,7 @@
 	<div>
 	<button onClick="location.href='./write-bbs'">글쓰기</button>
 	<button th:onclick="|location.href='@{/boards/modify-bbs(uniqueId=${board.uniqueId})}'|">수정</button>
-    <form style="display: inline; width: 40%" id="delete-form" th:action="@{/boards/delete-bbs(uniqueId=${board.uniqueId})}" method="post">
-        <input type="hidden" name="_method" value="delete"/>
+    <form style="display: inline; width: 40%" id="delete-form" th:action="@{/boards(uniqueId=${board.uniqueId})}" th:method="delete">
         <button  id="delete-btn">삭제</button>
     </form>
     </div>
@@ -89,7 +88,7 @@
 	 
 		 
 	    $.ajax({
-	        url: "/boards/comment/list",
+	        url: "/boards/comment",
 	        type: "GET",
 	        data:  data, 
 	        success: function(fragment){
@@ -109,7 +108,7 @@
 	   var str = $("#commentForm").serialize();
 	 
 	    $.ajax({
-	        url: "/boards/comment/write",
+	        url: "/boards/comment",
 	        type: "POST",
 	        data: str,
 	        success: function(fragment){
@@ -130,8 +129,8 @@
 	
 	
 	    $.ajax({
-	        url: "/boards/comment/delete",
-	        type: "POST",
+	        url: "/boards/comment",
+	        type: "DELETE",
 	        data:  deleteCmtData,
 	        success: function(fragment){
 	        	alert("댓글 삭제성공")

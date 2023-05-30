@@ -13,7 +13,7 @@
 <th:block th:replace="fragments/header :: headerFragment()"></th:block>
 <body>
 	<div class="container" id ="wrapper">
-	<form th:action="@{/boards/modify-bbs}"  th:object="${requestDto}" method="post" >
+	<form th:action="@{/boards}"  th:object="${requestDto}" th:method="put" >
 	    <table class="table">
 	        <tbody>
 	        <tr>

@@ -24,7 +24,7 @@
 			<th>작성자</th>
 			<tr th:each="item : ${board}">
 				<td th:text="${item.uniqueId}">No</td>
-				<td><a th:href="@{/boards/view(uniqueId=${item.uniqueId})}">[[${item.title}]]</a></td>
+				<td><a th:href="@{/boards(uniqueId=${item.uniqueId})}">[[${item.title}]]</a></td>
 				<td th:text="${item.createdDate}">createDate</td>
 				<td th:text="${item.writer}">userId</td>
 			</tr>

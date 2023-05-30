@@ -1,14 +1,13 @@
 package com.sangmin.portfolio.board.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sangmin.portfolio.board.dto.CommentDto;
 import com.sangmin.portfolio.board.entity.Comment;
 import com.sangmin.portfolio.board.service.CommentService;
+import com.sangmin.portfolio.config.CustomUserDetails;
 import com.sangmin.portfolio.model.SessionUser;
 
 import lombok.RequiredArgsConstructor;
@@ -40,16 +40,17 @@ public class CommentController {
 //    Comment comment = commentService.getComment(request);	
 //    return comment;
 //    }
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getCommentsList(HttpServletRequest request,Model model, Pageable pageable,CommentDto requestDto) throws Exception {
+    @RequestMapping( method = RequestMethod.GET)
+    public String getCommentsList(HttpServletRequest request,Model model, @PageableDefault(size=100) Pageable pageable,CommentDto requestDto,@AuthenticationPrincipal CustomUserDetails customUserDetails) throws Exception {
     
+    	pageable.getPageSize();
     	 Page<Comment> comment = commentService.findComments(requestDto,pageable);
     	    
 	    SessionUser user = (SessionUser) httpSession.getAttribute("user");
 	 
 	    
-	    if(user != null){
-	        model.addAttribute("userName", user.getName());
+	    if(customUserDetails != null){
+	        model.addAttribute("userName", customUserDetails.getName());
 	    }
 	    
 	    if(comment !=null) {
@@ -61,8 +62,8 @@ public class CommentController {
     
    
     
-    @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public String writeBbs(HttpServletRequest request,CommentDto requestDto, Model model, Pageable pageable) throws Exception {
+    @RequestMapping( method = RequestMethod.POST)
+    public String writeBbs(HttpServletRequest request,CommentDto requestDto, Model model, @PageableDefault(size=100) Pageable pageable,@AuthenticationPrincipal CustomUserDetails customUserDetails) throws Exception {
     
     	
     SessionUser user = (SessionUser) httpSession.getAttribute("user");
@@ -71,8 +72,8 @@ public class CommentController {
     Page<Comment> comment = commentService.findComments(requestDto,pageable);
    
 
-    if(user != null){
-        model.addAttribute("userName", user.getName());
+    if(customUserDetails != null){
+        model.addAttribute("userName", customUserDetails.getName());
     }
     if(comment !=null) {
     	model.addAttribute("commentList", comment);
@@ -83,7 +84,7 @@ public class CommentController {
     
 
     
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping( method = RequestMethod.DELETE)
     public String deleteByIdBbs(HttpServletRequest request,Model model, CommentDto requestDto, Pageable pageable) throws Exception {
     Long uniqueId = requestDto.getUniqueId();
     SessionUser user = (SessionUser) httpSession.getAttribute("user");

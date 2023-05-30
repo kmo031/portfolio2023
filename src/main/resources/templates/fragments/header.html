@@ -42,10 +42,10 @@
 						href="/boards/list" class="btn btn-secondary acitve" role="button">글쓰기</a></li>
 					<li class="me-2"><a sec:authorize="isAuthenticated()"
 						href="/pboards/list" class="btn btn-secondary acitve"
-						role="button">사진글쓰기리스트</a></li>
+						role="button">숙박업소예약</a></li>
 					<li class="me-2"><a sec:authorize="isAuthenticated()"
 						href="/pboards/create" class="btn btn-secondary acitve"
-						role="button">사진글쓰기</a></li>
+						role="button">숙박업소등록</a></li>
 					<li class="me-2">
 						<form th:action="@{/logout}" method="POST"
 							sec:authorize="isAuthenticated()">

@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.sangmin.portfolio.board.service.PhotoBoardService;
+import com.sangmin.portfolio.photoBoard.service.PhotoBoardService;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest

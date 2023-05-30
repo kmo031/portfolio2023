@@ -1,4 +1,4 @@
-package com.sangmin.portfolio.board.service;
+package com.sangmin.portfolio.photoBoard.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,10 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.sangmin.portfolio.board.dto.PhotoBoardDto;
-import com.sangmin.portfolio.board.entity.PhotoBoard;
-import com.sangmin.portfolio.board.repository.PhotoBoardRepository;
 import com.sangmin.portfolio.dto.AttachFileDTO;
+import com.sangmin.portfolio.photoBoard.dto.PhotoBoardDto;
+import com.sangmin.portfolio.photoBoard.entity.PhotoBoard;
+import com.sangmin.portfolio.photoBoard.repository.PhotoBoardRepository;
 import com.sangmin.portfolio.repository.FileRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -52,8 +52,17 @@ public class PhotoBoardService {
 		return boardDtoList;
 	}
 	
-	public Optional<PhotoBoard> getId(Long uniqueId) {
-		return photoBoardRepository.findById(uniqueId);
+	public PhotoBoardDto getId(Long uniqueId) throws Exception {
+		Optional<PhotoBoard> photoBoardOptional =photoBoardRepository.findById(uniqueId);
+		PhotoBoard photoBoard =null;
+		if(photoBoardOptional.isPresent()) {
+			photoBoard = photoBoardOptional.get();
+		} else {
+			throw new Exception();
+		}
+		PhotoBoardDto photoBoardDto = new PhotoBoardDto(photoBoard);
+		
+		return photoBoardDto;
 	}
 	
 	public void deletById(Long uniqueId) {

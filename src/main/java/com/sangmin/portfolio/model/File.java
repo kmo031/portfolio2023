@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sangmin.portfolio.board.entity.PhotoBoard;
+import com.sangmin.portfolio.photoBoard.entity.PhotoBoard;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

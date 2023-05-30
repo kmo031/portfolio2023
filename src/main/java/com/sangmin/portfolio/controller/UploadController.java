@@ -68,6 +68,7 @@ public class UploadController {
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			} // end catch
+			
 		} // end for
 
 	}
@@ -164,6 +165,7 @@ public class UploadController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+	
 
 		} // end for
 		

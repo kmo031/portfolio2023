@@ -1,4 +1,4 @@
-package com.sangmin.portfolio.board.controller;
+package com.sangmin.portfolio.photoBoard.controller;
 
 
 
@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,13 +26,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sangmin.portfolio.board.dto.PhotoBoardDto;
-import com.sangmin.portfolio.board.service.PhotoBoardService;
 import com.sangmin.portfolio.dto.AttachFileDTO;
 import com.sangmin.portfolio.model.SessionUser;
+import com.sangmin.portfolio.photoBoard.dto.PhotoBoardDto;
+import com.sangmin.portfolio.photoBoard.entity.PhotoBoard;
+import com.sangmin.portfolio.photoBoard.service.PhotoBoardService;
 import com.sangmin.portfolio.service.FileService;
 
 import lombok.RequiredArgsConstructor;
@@ -62,21 +65,14 @@ public class PhotoBoardController {
 	
 	@GetMapping("/list")
 	public String list( Model model) {
-		log.info("shop진입");
-		
-//		int total = service.getTotal(cri);
-//		
-//		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		return "photoBoard/pBoardList";
 	}
 	
 	@GetMapping("/detail")
-	public String detail( Model model) {
-		log.info("shop진입");
+	public String detail( Model model, @RequestParam("pno") Long pno) throws Exception {
 		
-//		int total = service.getTotal(cri);
-//		
-//		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		PhotoBoardDto pBoard = photoBoardService.getId(pno);
+		 model.addAttribute("pboard", pBoard);
 		return "photoBoard/pDetail";
 	}
 	

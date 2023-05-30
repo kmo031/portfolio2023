@@ -10,8 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import com.sangmin.portfolio.board.controller.PhotoBoardController;
 import com.sangmin.portfolio.model.enms.Role;
+import com.sangmin.portfolio.photoBoard.controller.PhotoBoardController;
 import com.sangmin.portfolio.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;

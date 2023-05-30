@@ -10,9 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.sangmin.portfolio.board.entity.PhotoBoard;
-import com.sangmin.portfolio.board.repository.PhotoBoardRepository;
 import com.sangmin.portfolio.model.File;
+import com.sangmin.portfolio.photoBoard.entity.PhotoBoard;
+import com.sangmin.portfolio.photoBoard.repository.PhotoBoardRepository;
 import com.sangmin.portfolio.repository.FileRepository;
 
 @ExtendWith(MockitoExtension.class)
